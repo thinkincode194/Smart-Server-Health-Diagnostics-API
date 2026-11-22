@@ -109,6 +109,16 @@ In every case the endpoint still returns HTTP 200 with real metrics and `"source
 | Retired/unknown model | default model had been retired | `LLM API returned HTTP 404` (fixed via `LLM_MODEL`) |
 | Malformed LLM output | covered by unit test | `LLM returned an unexpected response format` |
 
+
+
+## How it works
+
+1. A request to `GET /api/healthreport` reaches the route in `main.py`.
+2. `metrics.py` reads CPU, memory and disk usage with `psutil`, then classifies the status. The worst of the three metrics decides it.
+3. `ai_analysis.py` builds a prompt from the metrics and status, sends it to the LLM with a timeout, and parses the JSON reply into a summary and a recommendation.
+4. If the key is missing or the call fails, times out or returns unusable output, a fallback message is returned instead and the request never crashes.
+5. `main.py` returns the timestamp, status, metrics and `ai_analysis` (with `source` set to `llm` or `fallback`) as JSON.
+
 ## Design notes
 
 - **Status rule:** each metric is compared to the thresholds (>70 WARNING, >85 CRITICAL,
