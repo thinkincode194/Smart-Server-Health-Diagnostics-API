@@ -18,9 +18,9 @@ the raw metrics plus a clean fallback message.
 ```
 app/
   config.py        # env vars + thresholds (no hardcoded keys)
-  metrics.py       # psutil collection + status classification
-  ai_analysis.py   # prompt, LLM call, output parsing, fallback handling
-  main.py          # FastAPI route only
+  metrics.py       # Step 1: psutil collection + status classification
+  ai_analysis.py   # Step 2: prompt, LLM call, output parsing, fallback handling
+  main.py          # Step 3: FastAPI route GET /api/healthreport
 tests/test_core.py # unit tests (LLM is mocked, no API key needed)
 docs/screenshots/  # screenshots used in this README
 ```
