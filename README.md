@@ -5,6 +5,14 @@ classifies the overall status, and asks an LLM (Groq / Gemini / OpenAI) for a sh
 human-readable summary and one recommendation. If the LLM fails, the API still returns
 the raw metrics plus a clean fallback message.
 
+## Features
+
+* Live CPU, memory and disk usage via `psutil`
+* Status classification: over 85% is `CRITICAL`, over 70% is `WARNING`, otherwise `HEALTHY`
+* AI summary and one practical recommendation (Groq, Gemini or OpenAI)
+* Clean fallback if the API key is missing or the AI request fails
+* FastAPI with Swagger UI at `/docs`
+  
 ## Project structure
 
 ```
